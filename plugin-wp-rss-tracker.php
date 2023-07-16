@@ -44,7 +44,6 @@ function wprt_uninstall_plugin()
 
     // Delete the table
     $wpdb->query("DROP TABLE IF EXISTS {$table_name}");
-    die;
 }
 register_uninstall_hook(__FILE__, 'wprt_uninstall_plugin');
 
