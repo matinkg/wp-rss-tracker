@@ -7,35 +7,6 @@ Description: This plugin, tracks the RSS feeds of websites and update the posts 
 include_once(plugin_dir_path(__FILE__) . 'functions.php');
 define('WPRT_PLUGIN_FILE', __FILE__);
 
-// Schedule the cron event when the plugin is activated
-register_activation_hook(__FILE__, 'wprt_activate');
-function wprt_activate() {
-    wp_schedule_event(time(), 'every_15_minutes', 'wprt_function');
-}
-
-// Unschedule the cron event when the plugin is deactivated
-register_deactivation_hook(__FILE__, 'wprt_deactivate');
-function wprt_deactivate() {
-    wp_clear_scheduled_hook('wprt_function');
-}
-
-// Function to run every 15 minutes
-add_action('wprt_function', 'wprt_do_something');
-function wprt_do_something() {
-    // Your code logic here
-    // This function will run every 15 minutes
-}
-
-// Add custom cron interval for every 15 minutes
-add_filter('cron_schedules', 'wprt_custom_cron_interval');
-function wprt_custom_cron_interval($schedules) {
-    $schedules['every_15_minutes'] = array(
-        'interval' => 900, // 15 minutes in seconds
-        'display'  => __('Every 15 Minutes')
-    );
-    return $schedules;
-}
-
 /* create database */
 register_activation_hook(__FILE__, function () {
     global $wpdb;
@@ -102,4 +73,34 @@ add_action('admin_menu', function () {
         }
     );
 });
+
+
+/* --------------------------------- Cronjob -------------------------------- */
+// Schedule the cron event when the plugin is activated
+register_activation_hook(__FILE__, 'wprt_activate');
+function wprt_activate() {
+    wp_schedule_event(time(), 'every_15_minutes', 'wprt_function');
+}
+
+// Unschedule the cron event when the plugin is deactivated
+register_deactivation_hook(__FILE__, 'wprt_deactivate');
+function wprt_deactivate() {
+    wp_clear_scheduled_hook('wprt_function');
+}
+
+// Function to run every 15 minutes
+add_action('wprt_function', 'wprt_do_something');
+function wprt_do_something() {
+    include_once(plugin_dir_path(__FILE__) . 'cron.php');
+}
+
+// Add custom cron interval for every 15 minutes
+add_filter('cron_schedules', 'wprt_custom_cron_interval');
+function wprt_custom_cron_interval($schedules) {
+    $schedules['every_15_minutes'] = array(
+        'interval' => 900, // 15 minutes in seconds
+        'display'  => __('Every 15 Minutes')
+    );
+    return $schedules;
+}
 
