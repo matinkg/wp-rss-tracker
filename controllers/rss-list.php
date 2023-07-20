@@ -1,5 +1,23 @@
 <?php
 
+// handle toggle
+if (isset($_GET['action']) && $_GET['action'] == 'toggle' && isset($_GET['rss_id'])) {
+    global $wpdb;
+
+    $rss_id = $_GET['rss_id'];
+    $rss = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}rss_tracker WHERE id = $rss_id");
+    $status = $rss->status ? 0 : 1;
+    $wpdb->update(
+        $wpdb->prefix . 'rss_tracker',
+        array(
+            'status' => $status
+        ),
+        array(
+            'id' => $rss_id
+        )
+    );
+}
+
 // handle delete
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['rss_id'])) {
     global $wpdb;
