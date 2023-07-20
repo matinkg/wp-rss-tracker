@@ -179,6 +179,11 @@ function isPostWithHashExists($rssHash)
 function updateRssPostsById($rssId)
 {
     $rss = getRssById($rssId);
+
+    if ($rss->status == 0) {
+        return;
+    }
+
     $rssCategories = explode(',', $rss->categories);
     $rssContent = getRssContent($rss->rss_url);
 
