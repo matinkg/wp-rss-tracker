@@ -128,7 +128,8 @@ function addRssPost($rssData)
 {
     $postData = [
         'post_title'   => $rssData['title'],
-        'post_content' => $rssData['description'],
+        'post_content' => '',
+        'post_excerpt' => $rssData['description'],
         'post_status'  => 'publish',
         'post_type'    => 'post'
     ];
