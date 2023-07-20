@@ -8,6 +8,7 @@
                 <th>Feed Name</th>
                 <th>Feed URL</th>
                 <th>Source Name</th>
+                <th>Get Images</th>
                 <th>Status</th>
                 <th>Categories</th>
                 <th>Last Update</th>
@@ -23,6 +24,7 @@
                     <td><?php echo $item->name; ?></td>
                     <td><?php echo $item->rss_url; ?></td>
                     <td><?php echo $item->src_name; ?></td>
+                    <td><?php echo $item->get_images ? 'Yes' : 'No'; ?></td>
                     <td><span class="badge <?php echo $item->status ? 'active' : 'inactive'; ?>"><?php echo $item->status ? 'Active' : 'Inactive'; ?></span></td>
                     <td><?php echo $item->categories; ?></td>
                     <td><?php echo $item->last_update; ?></td>
