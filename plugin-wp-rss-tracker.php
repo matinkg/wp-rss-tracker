@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WP RSS Tracker
-Description: This plugin, tracks the RSS feeds of websites and update the posts on your website if there is any new news.
+Description: This plugin tracks the RSS feeds of websites and updates the posts on your website if there is any new news.
 */
 
 include_once(plugin_dir_path(__FILE__) . 'functions.php');
