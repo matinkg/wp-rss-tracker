@@ -11,8 +11,16 @@
                     <td><input name="rss_name" type="text" id="rss_name" value="" class="regular-text" required></td>
                 </tr>
                 <tr>
+                    <th scope="row"><label for="src_name">Source Name</label></th>
+                    <td><input name="src_name" type="text" id="src_name" value="" class="regular-text" required></td>
+                </tr>
+                <tr>
                     <th scope="row"><label for="rss_url">RSS URL</label></th>
                     <td><input name="rss_url" type="text" id="rss_url" value="" class="regular-text" required></td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="get_images">Get Images</label></th>
+                    <td><input name="get_images" type="checkbox" id="get_images" value="1"></td>
                 </tr>
                 <tr>
                     <th scope="row">Categories</th>

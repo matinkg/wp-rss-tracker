@@ -5,7 +5,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'add') {
     global $wpdb;
 
     $rss_name = $_POST['rss_name'];
+    $src_name = $_POST['src_name'];
     $rss_url = $_POST['rss_url'];
+    $get_images = isset($_POST['get_images']) ? $_POST['get_images'] : 0;
     $categories = isset($_POST['categories']) ? $_POST['categories'] : [];
 
     /* check if rss_url is valid */
@@ -19,7 +21,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'add') {
             $wpdb->prefix . 'rss_tracker',
             array(
                 'name' => $rss_name,
+                'src_name' => $src_name,
                 'rss_url' => $rss_url,
+                'get_images' => $get_images,
                 'categories' => implode(',', $categories),
             )
         );
