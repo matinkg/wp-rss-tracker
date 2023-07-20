@@ -76,6 +76,21 @@ add_action('admin_menu', function () {
     );
 });
 
+/* ---------------- Custom link for posts added by the plugin --------------- */
+// Filter the post permalink
+function custom_post_permalink($permalink, $post) {
+    // Check if the post has a rss link
+    $rss_link = get_post_meta($post->ID, 'rss_link', true);
+    if (!empty($rss_link)) {
+        return $rss_link;
+    }
+
+    return $permalink;
+}
+add_filter('post_link', 'custom_post_permalink', 10, 2);
+add_filter('post_type_link', 'custom_post_permalink', 10, 2);
+
+
 
 /* --------------------------------- Cronjob -------------------------------- */
 // Schedule the cron event when the plugin is activated
