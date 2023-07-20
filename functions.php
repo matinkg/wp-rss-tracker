@@ -192,15 +192,20 @@ function updateRssPostsById($rssId)
             continue;
         }
 
-        addRssPost([
+        $rssData = [
             'title' => $item['title'],
             'description' => $item['description'],
-            'pic' => $item['pic'],
             'link' => $item['link'],
             'pub_date' => $item['pub_date'],
             'categories' => $rssCategories,
             'hash' => $item['hash']
-        ]);
+        ];
+
+        if ($rss->get_images == 1) {
+            $rssData['pic'] = $item['pic'];
+        }
+
+        addRssPost($rssData);
     }
 
     /* update rss last update */
