@@ -23,7 +23,10 @@ register_activation_hook(__FILE__, function () {
         $sql = "CREATE TABLE {$table_name} (
             id INT(11) NOT NULL AUTO_INCREMENT,
             name VARCHAR(255) NOT NULL,
+            src_name VARCHAR(255) NOT NULL,
             rss_url TEXT NOT NULL,
+            get_images TINYINT(1) NOT NULL DEFAULT 0,
+            status TINYINT(1) NOT NULL DEFAULT 1,
             categories TEXT DEFAULT NULL,
             last_update DATETIME DEFAULT NULL,
             PRIMARY KEY (id)
