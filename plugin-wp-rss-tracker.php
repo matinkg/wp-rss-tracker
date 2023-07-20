@@ -90,6 +90,28 @@ function custom_post_permalink($permalink, $post) {
 add_filter('post_link', 'custom_post_permalink', 10, 2);
 add_filter('post_type_link', 'custom_post_permalink', 10, 2);
 
+/* --------------- Custom title for posts added by the plugin --------------- */
+// Add a custom tag before the wp-block-post-title block
+function add_custom_tag_before_post_title( $block_content, $block ) {
+    global $post;
+
+    if ($post && isset($post->ID) && 'core/post-title' === $block['blockName'] ) {
+        $post_id = $post->ID;
+
+        /* check if rss_source meta exist */
+        $rss_source = get_post_meta($post_id, 'rss_source', true);
+        if (!empty($rss_source)) {
+            $custom_tag = '<span class="rss-src">'.$rss_source.'</span>';
+        
+            // Append the custom tag with post meta to the block content
+            $block_content = $custom_tag . $block_content;
+        }
+
+    }
+
+    return $block_content;
+}
+add_filter( 'render_block', 'add_custom_tag_before_post_title', 10, 2 );
 
 
 /* --------------------------------- Cronjob -------------------------------- */

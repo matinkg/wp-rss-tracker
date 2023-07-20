@@ -153,6 +153,7 @@ function addRssPost($rssData)
     add_post_meta($post_id, 'rss_link', $rssData['link']);
     add_post_meta($post_id, 'rss_hash', $rssData['hash']);
     add_post_meta($post_id, 'rss_pub_date', $rssData['pub_date']);
+    add_post_meta($post_id, 'rss_source', $rssData['src_name']);
 
     return $post_id;
 }
@@ -199,7 +200,8 @@ function updateRssPostsById($rssId)
             'link' => $item['link'],
             'pub_date' => $item['pub_date'],
             'categories' => $rssCategories,
-            'hash' => $item['hash']
+            'hash' => $item['hash'],
+            'src_name' => $rss->src_name
         ];
 
         if ($rss->get_images == 1) {
