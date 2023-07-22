@@ -151,6 +151,54 @@ function add_custom_tag_before_post_title($block_content, $block)
 }
 add_filter('render_block', 'add_custom_tag_before_post_title', 10, 2);
 
+/* ---------------------------- Delete old posts ---------------------------- */
+// Register the scheduled event upon plugin activation
+function delete_old_posts_schedule() {
+    if (!wp_next_scheduled('wprt_delete_old_posts_event')) {
+        wp_schedule_event(time(), 'daily', 'wprt_delete_old_posts_event');
+    }
+}
+register_activation_hook(__FILE__, 'delete_old_posts_schedule');
+
+// Delete old posts when the scheduled event is triggered
+function wprt_delete_old_posts() {
+    /* get posts_expiration_time */
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'rss_tracker_settings';
+    $posts_expiration_time = $wpdb->get_var("SELECT value FROM $table_name WHERE name = 'posts_expiration_time'");
+    
+    if (empty($posts_expiration_time)) 
+    return;
+    
+    $args = array(
+        'post_type' => 'post',
+        'meta_query' => array(
+            array(
+                'key' => 'added_by_wprt', // Custom meta field added by the plugin
+                'value' => '1', // Custom value to identify posts added by the plugin
+            ),
+        ),
+        'date_query' => array(
+            'before' => date('Y-m-d H:i:s', time() - $posts_expiration_time),
+        ),
+        'posts_per_page' => -1,
+        'fields' => 'ids',
+    );
+    
+    $old_posts = get_posts($args);
+
+    foreach ($old_posts as $post_id) {
+        wp_delete_post($post_id, true); // true: Force delete to bypass trash
+    }
+}
+add_action('wprt_delete_old_posts_event', 'wprt_delete_old_posts');
+
+// Remove the scheduled event upon plugin deactivation
+function wprt_delete_old_posts_remove_schedule() {
+    $timestamp = wp_next_scheduled('wprt_delete_old_posts_event');
+    wp_unschedule_event($timestamp, 'wprt_delete_old_posts_event');
+}
+register_deactivation_hook(__FILE__, 'wprt_delete_old_posts_remove_schedule');
 
 /* --------------------------------- Cronjob -------------------------------- */
 // Schedule the cron event when the plugin is activated
