@@ -153,7 +153,7 @@ function addRssPost($rssData)
     add_post_meta($post_id, 'added_by_wprt', 1);
     add_post_meta($post_id, 'rss_link', $rssData['link']);
     add_post_meta($post_id, 'rss_hash', $rssData['hash']);
-    add_post_meta($post_id, 'rss_pub_date', $rssData['pub_date']);
+    add_post_meta($post_id, 'rss_pub_date', date('Y-m-d H:i:s', strtotime($rssData['pub_date'])));
     add_post_meta($post_id, 'rss_source', $rssData['src_name']);
 
     return $post_id;
