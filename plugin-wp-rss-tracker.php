@@ -205,19 +205,19 @@ register_deactivation_hook(__FILE__, 'wprt_delete_old_posts_remove_schedule');
 register_activation_hook(__FILE__, 'wprt_activate');
 function wprt_activate()
 {
-    wp_schedule_event(time(), 'every_15_minutes', 'wprt_function');
+    wp_schedule_event(time(), 'every_15_minutes', 'wprt_cron_function');
 }
 
 // Unschedule the cron event when the plugin is deactivated
 register_deactivation_hook(__FILE__, 'wprt_deactivate');
 function wprt_deactivate()
 {
-    wp_clear_scheduled_hook('wprt_function');
+    wp_clear_scheduled_hook('wprt_cron_function');
 }
 
 // Function to run every 15 minutes
-add_action('wprt_function', 'wprt_do_something');
-function wprt_do_something()
+add_action('wprt_cron_function', 'wprt_cron_do');
+function wprt_cron_do()
 {
     include_once(plugin_dir_path(__FILE__) . 'cron.php');
 }
