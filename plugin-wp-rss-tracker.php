@@ -58,7 +58,7 @@ register_activation_hook(__FILE__, function () {
         dbDelta($sql);
         
         // add setting values
-        $wpdb->insert($wpdb->prefix . 'rss_tracker_settings', array('name' => 'posts_expiration_time', 'value' => '',));
+        $wpdb->insert($wpdb->prefix . 'rss_tracker_settings', array('name' => 'posts_expiration_time', 'value' => '604800',));
     }
 
 });
