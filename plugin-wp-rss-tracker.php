@@ -72,6 +72,12 @@ function wprt_uninstall_plugin()
 
     // Delete the table
     $wpdb->query("DROP TABLE IF EXISTS {$table_name}");
+
+    // Define your table name
+    $table_name = $wpdb->prefix . 'rss_tracker_settings';
+
+    // Delete the table
+    $wpdb->query("DROP TABLE IF EXISTS {$table_name}");
 }
 register_uninstall_hook(__FILE__, 'wprt_uninstall_plugin');
 
