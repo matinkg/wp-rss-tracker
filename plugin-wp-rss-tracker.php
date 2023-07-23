@@ -3,7 +3,7 @@
 /*
 Plugin Name: WP RSS Tracker
 Description: This plugin tracks the RSS feeds of websites and updates the posts on your website if there is any new news.
-Version: 1.0.0
+Version: 1.0.1
 Author: Rexomin
 */
 
