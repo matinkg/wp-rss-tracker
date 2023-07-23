@@ -137,6 +137,22 @@ function custom_post_permalink($permalink, $post)
 add_filter('post_link', 'custom_post_permalink', 10, 2);
 add_filter('post_type_link', 'custom_post_permalink', 10, 2);
 
+// Add custom class to posts added by wprt plugin
+function wprt_add_custom_class_to_posts($classes, $class, $post_id) {
+    if (get_post_meta($post_id, 'added_by_wprt', true)) {
+        $classes[] = 'wprt-post';
+    }
+    return $classes;
+}
+add_filter('post_class', 'wprt_add_custom_class_to_posts', 10, 3);
+
+// Enqueue custom JavaScript on the front-end
+function wprt_enqueue_scripts() {
+    wp_enqueue_script( 'wprt-script-handle', plugins_url( 'wprt-script.js', __FILE__ ), array( 'jquery' ), '1.0', true );
+}
+add_action( 'wp_enqueue_scripts', 'wprt_enqueue_scripts' );
+
+
 /* --------------- Custom title for posts added by the plugin --------------- */
 // Add a custom tag before the wp-block-post-title block
 function add_custom_tag_before_post_title($block_content, $block)
